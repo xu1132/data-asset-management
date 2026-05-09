@@ -40,12 +40,12 @@ export const useMockStore = defineStore('mock', () => {
 
   // ==================== 机构管理 ====================
   const institutions = ref([
-    { id: 1, name: 'test111', parent: '武邑县大数据局', leader: '', phone: '' },
-    { id: 2, name: '武邑县大数据局', parent: '', leader: '', phone: '' },
-    { id: 3, name: '数据分析部', parent: '武邑县大数据局', leader: '', phone: '' },
-    { id: 4, name: '数据分析中心', parent: '数据分析部', leader: '', phone: '' },
-    { id: 5, name: '数据分析中队', parent: '数据分析中心', leader: '', phone: '' },
-    { id: 6, name: '数据分析小组', parent: '数据分析中队', leader: '', phone: '' }
+    { id: 1, name: 'test111', parent: '武邑县大数据局', leader: '张主任', phone: '0318-1234567' },
+    { id: 2, name: '武邑县大数据局', parent: '', leader: '李局长', phone: '0318-2345678' },
+    { id: 3, name: '数据分析部', parent: '武邑县大数据局', leader: '王部长', phone: '0318-3456789' },
+    { id: 4, name: '数据分析中心', parent: '数据分析部', leader: '刘主任', phone: '0318-4567890' },
+    { id: 5, name: '数据分析中队', parent: '数据分析中心', leader: '陈队长', phone: '0318-5678901' },
+    { id: 6, name: '数据分析小组', parent: '数据分析中队', leader: '赵组长', phone: '0318-6789012' }
   ])
 
   function addInstitution(inst) {
@@ -65,13 +65,13 @@ export const useMockStore = defineStore('mock', () => {
 
   // ==================== 用户管理 ====================
   const users = ref([
-    { id: 1, username: 'admin@qq.com', employeeId: '222', name: '3333', institution: '武邑县大数据局', userType: '普通用户', gender: '男', startDate: '', endDate: '' },
-    { id: 2, username: 'adminieee@qq....', employeeId: '3333333', name: '3333333', institution: '数据分析中队', userType: '普通用户', gender: '男', startDate: '', endDate: '' },
-    { id: 3, username: 'admin11111@qq....', employeeId: '55555555555', name: '55555555555', institution: '数据分析中队', userType: '普通用户', gender: '男', startDate: '', endDate: '' },
-    { id: 4, username: '777777777777...', employeeId: '777777777777...', name: '777777777777...', institution: 'test111', userType: '普通用户', gender: '男', startDate: '', endDate: '' },
-    { id: 5, username: '8888888888@q...', employeeId: '8888888888', name: '8888888888', institution: '数据分析中队', userType: '普通用户', gender: '男', startDate: '', endDate: '' },
-    { id: 6, username: 'admin', employeeId: 'admin', name: '管理员', institution: '', userType: '管理员', gender: '男', startDate: '', endDate: '' },
-    { id: 7, username: 'fengj@zkcomt.com', employeeId: 'fengj', name: '冯江', institution: '数据分析部', userType: '管理员', gender: '男', startDate: '', endDate: '' }
+    { id: 1, username: 'admin@qq.com', employeeId: '222', name: '张明', institution: '武邑县大数据局', userType: '普通用户', gender: '男', startDate: '2025-01-01', endDate: '' },
+    { id: 2, username: 'zhangsan@qq.com', employeeId: '3333333', name: '李华', institution: '数据分析中队', userType: '普通用户', gender: '男', startDate: '2025-02-15', endDate: '' },
+    { id: 3, username: 'lisi@qq.com', employeeId: '55555555555', name: '王芳', institution: '数据分析中队', userType: '普通用户', gender: '女', startDate: '2025-03-10', endDate: '' },
+    { id: 4, username: 'wangwu@qq.com', employeeId: '777777777777', name: '赵六', institution: 'test111', userType: '普通用户', gender: '男', startDate: '2025-04-01', endDate: '' },
+    { id: 5, username: 'zhaoliu@qq.com', employeeId: '8888888888', name: '孙七', institution: '数据分析中队', userType: '普通用户', gender: '男', startDate: '2025-04-15', endDate: '' },
+    { id: 6, username: 'admin', employeeId: 'admin', name: '管理员', institution: '武邑县大数据局', userType: '管理员', gender: '男', startDate: '2025-01-01', endDate: '' },
+    { id: 7, username: 'fengj@zkcomt.com', employeeId: 'fengj', name: '冯江', institution: '数据分析部', userType: '管理员', gender: '男', startDate: '2025-01-01', endDate: '' }
   ])
 
   function addUser(user) {

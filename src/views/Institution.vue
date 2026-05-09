@@ -21,6 +21,7 @@
         <el-table-column prop="name" label="名称" min-width="200" />
         <el-table-column prop="parent" label="上级机构" min-width="200" />
         <el-table-column prop="leader" label="负责人" min-width="150" />
+        <el-table-column prop="phone" label="联系电话" min-width="150" />
         <el-table-column label="操作" width="150" fixed="right">
           <template #default="{ row }">
             <el-button type="primary" link size="small" @click="showEditDialog(row)">编辑</el-button>
@@ -57,6 +58,9 @@
         <el-form-item label="负责人">
           <el-input v-model="formData.leader" placeholder="请输入负责人" />
         </el-form-item>
+        <el-form-item label="联系电话">
+          <el-input v-model="formData.phone" placeholder="请输入联系电话" />
+        </el-form-item>
       </el-form>
       <template #footer>
         <el-button @click="dialogVisible = false">取消</el-button>
@@ -84,7 +88,8 @@ const editId = ref(null)
 const formData = reactive({
   name: '',
   parent: '',
-  leader: ''
+  leader: '',
+  phone: ''
 })
 
 const filteredInstitutions = computed(() => {
