@@ -90,6 +90,11 @@ const handleCommand = (command) => {
   padding: 0 24px;
   height: 60px;
   flex-shrink: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
 }
 
 .topbar-left {
@@ -156,7 +161,7 @@ const handleCommand = (command) => {
 /* 内容区域 */
 .content-area {
   flex: 1;
-  padding: 16px 24px;
+  padding: 16px 24px 60px;
   overflow-y: auto;
 }
 
@@ -167,6 +172,12 @@ const handleCommand = (command) => {
   text-align: center;
   padding: 12px;
   font-size: 13px;
+position: fixed;
+  z-index: 1000;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
 }
 
 .footer p {
