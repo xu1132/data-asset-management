@@ -15,6 +15,7 @@
           background-color="#1a56db"
           text-color="rgba(255,255,255,0.85)"
           active-text-color="#ffffff"
+          :ellipsis="false"
         >
           <el-menu-item index="/dashboard">首页</el-menu-item>
           <el-menu-item index="/application">应用管理</el-menu-item>
