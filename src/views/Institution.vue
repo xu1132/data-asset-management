@@ -31,13 +31,12 @@
       
       <!-- 分页 -->
       <div class="pagination">
-        <span>共 {{ mockStore.institutions.length }} 条</span>
         <el-pagination
           v-model:current-page="currentPage"
           v-model:page-size="pageSize"
           :total="mockStore.institutions.length"
           :page-sizes="[10, 20, 50]"
-          layout="total, sizes, prev, pager, next, jumper"
+          layout="total, sizes, ->, prev, pager, next, jumper"
         />
       </div>
     </div>
@@ -145,9 +144,7 @@ const handleDelete = async (row) => {
 }
 
 .pagination {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  width: 100%;
   margin-top: 20px;
   padding-top: 20px;
   border-top: 1px solid #e5e7eb;
