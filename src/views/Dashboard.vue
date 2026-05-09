@@ -3,7 +3,7 @@
     <!-- 公告栏 -->
     <div class="notice-banner">
       <el-icon><Bell /></el-icon>
-      <span>基础数据平台系统更新啦~</span>
+      <span>数据管理平台系统更新啦~</span>
     </div>
 
     <!-- 应用卡片区域 -->

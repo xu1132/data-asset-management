@@ -40,9 +40,9 @@ export const useMockStore = defineStore('mock', () => {
 
   // ==================== 机构管理 ====================
   const institutions = ref([
-    { id: 1, name: 'test111', parent: '武邑县大数据局', leader: '张主任', phone: '0318-1234567' },
-    { id: 2, name: '武邑县大数据局', parent: '', leader: '李局长', phone: '0318-2345678' },
-    { id: 3, name: '数据分析部', parent: '武邑县大数据局', leader: '王部长', phone: '0318-3456789' },
+    { id: 1, name: '数据中心', parent: '数据管理局', leader: '张主任', phone: '0318-1234567' },
+    { id: 2, name: '数据管理局', parent: '', leader: '李局长', phone: '0318-2345678' },
+    { id: 3, name: '数据分析部', parent: '数据管理局', leader: '王部长', phone: '0318-3456789' },
     { id: 4, name: '数据分析中心', parent: '数据分析部', leader: '刘主任', phone: '0318-4567890' },
     { id: 5, name: '数据分析中队', parent: '数据分析中心', leader: '陈队长', phone: '0318-5678901' },
     { id: 6, name: '数据分析小组', parent: '数据分析中队', leader: '赵组长', phone: '0318-6789012' }
@@ -65,12 +65,12 @@ export const useMockStore = defineStore('mock', () => {
 
   // ==================== 用户管理 ====================
   const users = ref([
-    { id: 1, username: 'admin@qq.com', employeeId: '222', name: '张明', institution: '武邑县大数据局', userType: '普通用户', gender: '男', startDate: '2025-01-01', endDate: '' },
+    { id: 1, username: 'admin@qq.com', employeeId: '222', name: '张明', institution: '数据管理局', userType: '普通用户', gender: '男', startDate: '2025-01-01', endDate: '' },
     { id: 2, username: 'zhangsan@qq.com', employeeId: '3333333', name: '李华', institution: '数据分析中队', userType: '普通用户', gender: '男', startDate: '2025-02-15', endDate: '' },
     { id: 3, username: 'lisi@qq.com', employeeId: '55555555555', name: '王芳', institution: '数据分析中队', userType: '普通用户', gender: '女', startDate: '2025-03-10', endDate: '' },
-    { id: 4, username: 'wangwu@qq.com', employeeId: '777777777777', name: '赵六', institution: 'test111', userType: '普通用户', gender: '男', startDate: '2025-04-01', endDate: '' },
+    { id: 4, username: 'wangwu@qq.com', employeeId: '777777777777', name: '赵六', institution: '数据中心', userType: '普通用户', gender: '男', startDate: '2025-04-01', endDate: '' },
     { id: 5, username: 'zhaoliu@qq.com', employeeId: '8888888888', name: '孙七', institution: '数据分析中队', userType: '普通用户', gender: '男', startDate: '2025-04-15', endDate: '' },
-    { id: 6, username: 'admin', employeeId: 'admin', name: '管理员', institution: '武邑县大数据局', userType: '管理员', gender: '男', startDate: '2025-01-01', endDate: '' },
+    { id: 6, username: 'admin', employeeId: 'admin', name: '管理员', institution: '数据管理局', userType: '管理员', gender: '男', startDate: '2025-01-01', endDate: '' },
     { id: 7, username: 'fengj@zkcomt.com', employeeId: 'fengj', name: '冯江', institution: '数据分析部', userType: '管理员', gender: '男', startDate: '2025-01-01', endDate: '' }
   ])
 
@@ -91,12 +91,12 @@ export const useMockStore = defineStore('mock', () => {
 
   // ==================== 文档管理 ====================
   const documents = ref([
-    { id: 1, title: '武邑县数据和政务服务局 2025 年部门预算信息公开', author: 'admin', type: '预算公开', date: '2025-08-13' },
+    { id: 1, title: '数据和政务服务局 2025 年部门预算信息公开', author: 'admin', type: '预算公开', date: '2025-08-13' },
     { id: 2, title: '2025.08.13 号新增个体和企业信息公示.xls', author: 'admin', type: '企业信息', date: '2025-08-13' },
-    { id: 3, title: '武邑县消防救援大队 2025 年 8 月份双随机抽查单位名单', author: 'admin', type: '抽查名单', date: '2025-08-10' },
-    { id: 4, title: '武邑县民政局 2025 年 8 月全县分散供养城市特困人员资金发放台账', author: 'admin', type: '资金台账', date: '2025-08-08' },
-    { id: 5, title: '武邑县民政局 2025 年 8 月全县分散供养农村特困人员资金发放台账', author: 'admin', type: '资金台账', date: '2025-08-08' },
-    { id: 6, title: '武邑县民政局 2025 年 8 月全县农村低保金发放台账', author: 'admin', type: '低保台账', date: '2025-08-05' }
+    { id: 3, title: '消防救援大队 2025 年 8 月份双随机抽查单位名单', author: 'admin', type: '抽查名单', date: '2025-08-10' },
+    { id: 4, title: '民政局 2025 年 8 月全县分散供养城市特困人员资金发放台账', author: 'admin', type: '资金台账', date: '2025-08-08' },
+    { id: 5, title: '民政局 2025 年 8 月全县分散供养农村特困人员资金发放台账', author: 'admin', type: '资金台账', date: '2025-08-08' },
+    { id: 6, title: '民政局 2025 年 8 月全县农村低保金发放台账', author: 'admin', type: '低保台账', date: '2025-08-05' }
   ])
 
   function addDocument(doc) {
