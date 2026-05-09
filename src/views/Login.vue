@@ -25,7 +25,7 @@
         <el-form-item prop="email">
           <el-input
             v-model="loginForm.email"
-            placeholder="请输入邮箱"
+            placeholder="请输入用户名"
             size="large"
             :prefix-icon="Message"
           />
@@ -109,8 +109,8 @@ const refreshCaptcha = () => {
 }
 
 const loginForm = reactive({
-  email: 'admin',
-  password: 'admin123',
+  email: '',
+  password: '',
   captcha: ''
 })
 
@@ -126,8 +126,7 @@ const validateCaptcha = (rule, value, callback) => {
 
 const loginRules = {
   email: [
-    { required: true, message: '请输入邮箱', trigger: 'blur' },
-    { type: 'email', message: '请输入正确的邮箱格式', trigger: 'blur' }
+    { required: true, message: '请输入用户名', trigger: 'blur' }
   ],
   password: [
     { required: true, message: '请输入密码', trigger: 'blur' },
