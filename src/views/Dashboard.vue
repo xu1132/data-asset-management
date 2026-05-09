@@ -1,244 +1,375 @@
 <template>
   <div class="dashboard">
-    <!-- 欢迎横幅 -->
-    <div class="welcome-banner">
-      <div class="welcome-text">
-        <h2>欢迎回来，{{ userStore.userInfo.name || '管理员' }}</h2>
-        <p>今天是 {{ currentDate }}，祝您工作顺利！</p>
-      </div>
+    <!-- 公告栏 -->
+    <div class="notice-banner">
+      <el-icon><Bell /></el-icon>
+      <span>基础数据平台系统更新啦~</span>
     </div>
 
-    <!-- 统计卡片 -->
-    <div class="stats-grid">
-      <div class="stat-card">
-        <div class="stat-icon blue">
-          <el-icon><Document /></el-icon>
-        </div>
-        <div class="stat-info">
-          <h3>{{ stats.totalAssets }}</h3>
-          <p>数据资产总量</p>
-        </div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-icon green">
-          <el-icon><Share /></el-icon>
-        </div>
-        <div class="stat-info">
-          <h3>{{ stats.shareRequests }}</h3>
-          <p>本月共享申请</p>
-        </div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-icon orange">
-          <el-icon><Clock /></el-icon>
-        </div>
-        <div class="stat-info">
-          <h3>{{ stats.pendingReviews }}</h3>
-          <p>待审核资产</p>
-        </div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-icon red">
-          <el-icon><User /></el-icon>
-        </div>
-        <div class="stat-info">
-          <h3>{{ stats.totalUsers }}</h3>
-          <p>注册用户数</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- 图表区域 -->
-    <div class="charts-grid">
-      <div class="page-card chart-card">
-        <div class="page-header">
-          <span class="page-title">数据资产增长趋势</span>
-        </div>
-        <div ref="lineChartRef" style="width: 100%; height: 280px;"></div>
-      </div>
-      <div class="page-card chart-card">
-        <div class="page-header">
-          <span class="page-title">资产类型分布</span>
-        </div>
-        <div ref="pieChartRef" style="width: 100%; height: 280px;"></div>
-      </div>
-    </div>
-
-    <!-- 最新动态 -->
+    <!-- 应用卡片区域 -->
     <div class="page-card">
-      <div class="page-header">
-        <span class="page-title">最新动态</span>
-        <el-button type="primary" link @click="$router.push('/security/log')">查看更多</el-button>
+      <el-tabs v-model="activeTab">
+        <el-tab-pane label="我的常用" name="favorite">
+          <div class="app-grid">
+            <div class="app-card" v-for="app in favoriteApps" :key="app.id">
+              <div class="app-icon">
+                <el-icon :size="40"><Monitor /></el-icon>
+              </div>
+              <div class="app-info">
+                <h3>{{ app.name }}</h3>
+                <p>{{ app.desc }}</p>
+              </div>
+              <div class="app-actions">
+                <el-button type="primary" size="small">进入系统</el-button>
+                <el-button size="small">资源管理</el-button>
+              </div>
+              <el-icon class="star-icon"><StarFilled /></el-icon>
+            </div>
+          </div>
+        </el-tab-pane>
+        <el-tab-pane label="基础应用" name="basic">
+          <div class="app-grid">
+            <div class="app-card" v-for="app in basicApps" :key="app.id">
+              <div class="app-icon">
+                <el-icon :size="40"><Monitor /></el-icon>
+              </div>
+              <div class="app-info">
+                <h3>{{ app.name }}</h3>
+                <p>{{ app.desc }}</p>
+              </div>
+              <div class="app-actions">
+                <el-button type="primary" size="small">进入系统</el-button>
+                <el-button size="small">资源管理</el-button>
+              </div>
+            </div>
+          </div>
+        </el-tab-pane>
+        <el-tab-pane label="主题应用" name="theme">
+          <div class="app-grid">
+            <div class="app-card" v-for="app in themeApps" :key="app.id">
+              <div class="app-icon">
+                <el-icon :size="40"><Monitor /></el-icon>
+              </div>
+              <div class="app-info">
+                <h3>{{ app.name }}</h3>
+                <p>{{ app.desc }}</p>
+              </div>
+              <div class="app-actions">
+                <el-button type="primary" size="small">进入系统</el-button>
+                <el-button size="small">资源管理</el-button>
+              </div>
+            </div>
+          </div>
+        </el-tab-pane>
+        <el-tab-pane label="其他应用" name="other">
+          <div class="app-grid">
+            <div class="app-card" v-for="app in otherApps" :key="app.id">
+              <div class="app-icon">
+                <el-icon :size="40"><Monitor /></el-icon>
+              </div>
+              <div class="app-info">
+                <h3>{{ app.name }}</h3>
+                <p>{{ app.desc }}</p>
+              </div>
+              <div class="app-actions">
+                <el-button type="primary" size="small">进入系统</el-button>
+                <el-button size="small">资源管理</el-button>
+              </div>
+            </div>
+          </div>
+        </el-tab-pane>
+      </el-tabs>
+    </div>
+
+    <!-- 文档和资讯区域 -->
+    <div class="content-grid">
+      <!-- 文档列表 -->
+      <div class="page-card document-section">
+        <div class="section-header">
+          <div class="section-title">
+            <el-icon :size="20"><Document /></el-icon>
+            <span>最新文档</span>
+            <el-button type="primary" link>查看全部 &gt;</el-button>
+          </div>
+        </div>
+        <div class="document-list">
+          <div class="document-item" v-for="doc in documents" :key="doc.id">
+            <el-tag size="small" type="info">文档类型</el-tag>
+            <span class="doc-title">{{ doc.title }}</span>
+            <span class="doc-author">发布人：{{ doc.author }}</span>
+          </div>
+        </div>
       </div>
-      <el-timeline>
-        <el-timeline-item
-          v-for="(item, index) in activities"
-          :key="index"
-          :timestamp="item.timestamp"
-          placement="top"
-          :color="item.color"
-        >
-          <el-card shadow="hover">
-            <h4>{{ item.title }}</h4>
-            <p>{{ item.content }}</p>
-          </el-card>
-        </el-timeline-item>
-      </el-timeline>
+
+      <!-- 右侧资讯 -->
+      <div class="page-card news-section">
+        <div class="section-header">
+          <el-icon :size="18"><InfoFilled /></el-icon>
+          <span class="section-title-text">最新资讯</span>
+        </div>
+        <div class="news-list">
+          <div class="news-item" v-for="news in newsList" :key="news.id">
+            <el-tag v-if="news.hot" size="small" type="danger">最新</el-tag>
+            <span class="news-title">{{ news.title }}</span>
+            <span class="news-date">{{ news.date }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 消息工作台 -->
+    <div class="page-card">
+      <div class="section-header">
+        <el-icon :size="18"><Message /></el-icon>
+        <span class="section-title-text">消息工作台</span>
+      </div>
+      <div class="empty-message">
+        <el-empty description="暂无最新消息" :image-size="80" />
+      </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, reactive, onMounted, onUnmounted, computed } from 'vue'
-import * as echarts from 'echarts'
-import { Document, Share, Clock, User } from '@element-plus/icons-vue'
-import { useUserStore } from '@/stores/user'
+import { ref } from 'vue'
+import { Bell, Monitor, StarFilled, Document, InfoFilled, Message } from '@element-plus/icons-vue'
 
-const userStore = useUserStore()
+const activeTab = ref('favorite')
 
-const lineChartRef = ref(null)
-const pieChartRef = ref(null)
-let lineChart = null
-let pieChart = null
-
-const currentDate = computed(() => {
-  const now = new Date()
-  return `${now.getFullYear()}年${now.getMonth() + 1}月${now.getDate()}日`
-})
-
-const stats = reactive({
-  totalAssets: 1256,
-  shareRequests: 89,
-  pendingReviews: 12,
-  totalUsers: 356
-})
-
-const activities = ref([
-  { timestamp: '2026-05-09 10:30', title: '资产审核通过', content: '「人口数据-2026年」已审核通过', color: '#1a56db' },
-  { timestamp: '2026-05-09 09:15', title: '共享申请', content: '「教育数据」发起共享申请，等待审批', color: '#52c41a' },
-  { timestamp: '2026-05-09 08:45', title: '资产登记', content: '「医疗数据」已提交登记申请', color: '#fa8c16' },
-  { timestamp: '2026-05-08 17:30', title: '数据更新', content: '「经济数据-Q1」已完成更新', color: '#6b7280' },
-  { timestamp: '2026-05-08 16:00', title: '安全扫描', content: '完成全系统安全漏洞扫描，未发现风险', color: '#1a56db' }
+const favoriteApps = ref([
+  { id: 1, name: 'data-platform', desc: '数据编目系统' },
+  { id: 2, name: 'data-report', desc: '数据上报系统' },
+  { id: 3, name: 'data-asset', desc: '数据查询系统' }
 ])
 
-const initLineChart = () => {
-  if (!lineChartRef.value) return
-  lineChart = echarts.init(lineChartRef.value)
-  const option = {
-    tooltip: { trigger: 'axis' },
-    legend: { data: ['数据总量', '新增资产'], bottom: 0 },
-    grid: { left: '3%', right: '4%', bottom: '15%', containLabel: true },
-    xAxis: {
-      type: 'category',
-      data: ['1月', '2月', '3月', '4月', '5月', '6月'],
-      axisLine: { lineStyle: { color: '#e5e7eb' } },
-      axisLabel: { color: '#6b7280' }
-    },
-    yAxis: {
-      type: 'value',
-      axisLine: { show: false },
-      splitLine: { lineStyle: { color: '#f2f4f7' } },
-      axisLabel: { color: '#6b7280' }
-    },
-    series: [
-      {
-        name: '数据总量',
-        type: 'line',
-        smooth: true,
-        data: [820, 932, 901, 1034, 1130, 1256],
-        areaStyle: { color: 'rgba(26, 86, 219, 0.08)' },
-        itemStyle: { color: '#1a56db', borderRadius: [4, 4, 0, 0] },
-        lineStyle: { color: '#1a56db' }
-      },
-      {
-        name: '新增资产',
-        type: 'line',
-        smooth: true,
-        data: [120, 132, 101, 134, 190, 230],
-        areaStyle: { color: 'rgba(82, 196, 26, 0.08)' },
-        itemStyle: { color: '#52c41a', borderRadius: [4, 4, 0, 0] },
-        lineStyle: { color: '#52c41a' }
-      }
-    ]
-  }
-  lineChart.setOption(option)
-}
+const basicApps = ref([
+  { id: 4, name: 'data-base', desc: '基础数据库' },
+  { id: 5, name: 'data-exchange', desc: '数据交换平台' }
+])
 
-const initPieChart = () => {
-  if (!pieChartRef.value) return
-  pieChart = echarts.init(pieChartRef.value)
-  const option = {
-    tooltip: { trigger: 'item' },
-    legend: { bottom: 0, itemWidth: 12, itemHeight: 12 },
-    series: [
-      {
-        type: 'pie',
-        radius: ['45%', '70%'],
-        center: ['50%', '45%'],
-        avoidLabelOverlap: false,
-        itemStyle: { borderRadius: 6, borderColor: '#fff', borderWidth: 2 },
-        label: { show: true, formatter: '{b}\n{c}项', fontSize: 12 },
-        data: [
-          { value: 450, name: '基础数据', itemStyle: { color: '#1a56db' } },
-          { value: 280, name: '业务数据', itemStyle: { color: '#3b82f6' } },
-          { value: 200, name: '统计数据', itemStyle: { color: '#52c41a' } },
-          { value: 180, name: '监测数据', itemStyle: { color: '#fa8c16' } },
-          { value: 146, name: '其他数据', itemStyle: { color: '#6b7280' } }
-        ]
-      }
-    ]
-  }
-  pieChart.setOption(option)
-}
+const themeApps = ref([
+  { id: 6, name: 'finance-db', desc: '金融主题库' },
+  { id: 7, name: 'health-db', desc: '医疗主题库' }
+])
 
-onMounted(() => {
-  initLineChart()
-  initPieChart()
-  window.addEventListener('resize', () => {
-    lineChart?.resize()
-    pieChart?.resize()
-  })
-})
+const otherApps = ref([
+  { id: 8, name: 'other-system', desc: '其他系统' }
+])
 
-onUnmounted(() => {
-  lineChart?.dispose()
-  pieChart?.dispose()
-})
+const documents = ref([
+  { id: 1, title: '武邑县数据和政务服务局 2025 年部门预算信息公开', author: 'admin' },
+  { id: 2, title: '2025.08.13 号新增个体和企业信息公示.xls', author: 'admin' },
+  { id: 3, title: '武邑县消防救援大队 2025 年 8 月份双随机抽查单位名单', author: 'admin' },
+  { id: 4, title: '武邑县民政局 2025 年 8 月全县分散供养城市特困人员资金发放台账', author: 'admin' },
+  { id: 5, title: '武邑县民政局 2025 年 8 月全县分散供养农村特困人员资金发放台账', author: 'admin' },
+  { id: 6, title: '武邑县民政局 2025 年 8 月全县农村低保金发放台账', author: 'admin' }
+])
+
+const newsList = ref([
+  { id: 1, title: '数据资产管理平台试运行上线公告', date: '2025-12-01', hot: true },
+  { id: 2, title: '数据安全管理规范更新通知', date: '2025-11-28' },
+  { id: 3, title: '2023 年度数据质量报告发布', date: '2025-11-25' },
+  { id: 4, title: '数据分析师培训课程安排', date: '2025-11-20' },
+  { id: 5, title: '数据可视化工具使用指南', date: '2025-11-15' },
+  { id: 6, title: '数据资产目录更新说明', date: '2025-11-10' },
+  { id: 7, title: '数据治理项目阶段性成果展示', date: '2025-11-05' }
+])
 </script>
 
 <style scoped>
-.welcome-banner {
-  background: linear-gradient(135deg, #1a3a8f, #1a56db);
+.dashboard {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* 公告栏 */
+.notice-banner {
+  background: linear-gradient(135deg, #e3f2fd, #bbdefb);
   border-radius: 8px;
-  padding: 24px 28px;
+  padding: 12px 20px;
   margin-bottom: 16px;
-  color: white;
-}
-
-.welcome-text h2 {
-  font-size: 20px;
-  font-weight: 600;
-  margin-bottom: 6px;
-}
-
-.welcome-text p {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #1565c0;
   font-size: 14px;
-  opacity: 0.9;
 }
 
-.charts-grid {
+/* 应用卡片 */
+.app-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  padding: 20px 0;
+}
+
+.app-card {
+  background: #f5f7fa;
+  border-radius: 8px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  transition: box-shadow 0.2s;
+}
+
+.app-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.app-icon {
+  width: 80px;
+  height: 80px;
+  background: white;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+  color: #1a56db;
+}
+
+.app-info h3 {
+  font-size: 16px;
+  font-weight: 600;
+  color: #1f2937;
+  margin: 0 0 8px 0;
+}
+
+.app-info p {
+  font-size: 13px;
+  color: #6b7280;
+  margin: 0 0 16px 0;
+}
+
+.app-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.star-icon {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  color: #fbbf24;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+/* 内容网格 */
+.content-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
   gap: 16px;
   margin-bottom: 16px;
 }
 
-.chart-card {
-  min-height: 360px;
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.section-title-text {
+  font-size: 16px;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+/* 文档列表 */
+.document-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.document-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.document-item:last-child {
+  border-bottom: none;
+}
+
+.doc-title {
+  flex: 1;
+  font-size: 14px;
+  color: #1a56db;
+  cursor: pointer;
+}
+
+.doc-title:hover {
+  text-decoration: underline;
+}
+
+.doc-author {
+  font-size: 13px;
+  color: #6b7280;
+}
+
+/* 资讯列表 */
+.news-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.news-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 0;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.news-item:last-child {
+  border-bottom: none;
+}
+
+.news-title {
+  flex: 1;
+  font-size: 14px;
+  color: #1f2937;
+  cursor: pointer;
+}
+
+.news-title:hover {
+  color: #1a56db;
+}
+
+.news-date {
+  font-size: 12px;
+  color: #9ca3af;
+}
+
+.empty-message {
+  padding: 20px 0;
 }
 
 @media (max-width: 1200px) {
-  .charts-grid {
+  .app-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .content-grid {
     grid-template-columns: 1fr;
   }
 }
