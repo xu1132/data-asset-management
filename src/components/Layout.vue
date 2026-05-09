@@ -161,7 +161,7 @@ const handleCommand = (command) => {
 /* 内容区域 */
 .content-area {
   flex: 1;
-  padding: 16px 24px 60px;
+  padding: 76px 24px 60px;
   overflow-y: auto;
 }
 
