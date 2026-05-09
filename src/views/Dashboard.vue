@@ -1,5 +1,13 @@
 <template>
   <div class="dashboard">
+    <!-- 欢迎横幅 -->
+    <div class="welcome-banner">
+      <div class="welcome-text">
+        <h2>欢迎回来，{{ userStore.userInfo.name || '管理员' }}</h2>
+        <p>今天是 {{ currentDate }}，祝您工作顺利！</p>
+      </div>
+    </div>
+
     <!-- 统计卡片 -->
     <div class="stats-grid">
       <div class="stat-card">
@@ -46,13 +54,13 @@
         <div class="page-header">
           <span class="page-title">数据资产增长趋势</span>
         </div>
-        <div ref="lineChartRef" style="width: 100%; height: 320px;"></div>
+        <div ref="lineChartRef" style="width: 100%; height: 280px;"></div>
       </div>
       <div class="page-card chart-card">
         <div class="page-header">
           <span class="page-title">资产类型分布</span>
         </div>
-        <div ref="pieChartRef" style="width: 100%; height: 320px;"></div>
+        <div ref="pieChartRef" style="width: 100%; height: 280px;"></div>
       </div>
     </div>
 
@@ -81,14 +89,22 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted, onUnmounted } from 'vue'
+import { ref, reactive, onMounted, onUnmounted, computed } from 'vue'
 import * as echarts from 'echarts'
 import { Document, Share, Clock, User } from '@element-plus/icons-vue'
+import { useUserStore } from '@/stores/user'
+
+const userStore = useUserStore()
 
 const lineChartRef = ref(null)
 const pieChartRef = ref(null)
 let lineChart = null
 let pieChart = null
+
+const currentDate = computed(() => {
+  const now = new Date()
+  return `${now.getFullYear()}年${now.getMonth() + 1}月${now.getDate()}日`
+})
 
 const stats = reactive({
   totalAssets: 1256,
@@ -98,11 +114,11 @@ const stats = reactive({
 })
 
 const activities = ref([
-  { timestamp: '2026-05-09 10:30', title: '资产审核通过', content: '「人口数据-2026年」已审核通过', color: '#67C23A' },
-  { timestamp: '2026-05-09 09:15', title: '共享申请', content: '「教育数据」发起共享申请，等待审批', color: '#409EFF' },
-  { timestamp: '2026-05-09 08:45', title: '资产登记', content: '「医疗数据」已提交登记申请', color: '#E6A23C' },
-  { timestamp: '2026-05-08 17:30', title: '数据更新', content: '「经济数据-Q1」已完成更新', color: '#909399' },
-  { timestamp: '2026-05-08 16:00', title: '安全扫描', content: '完成全系统安全漏洞扫描，未发现风险', color: '#67C23A' }
+  { timestamp: '2026-05-09 10:30', title: '资产审核通过', content: '「人口数据-2026年」已审核通过', color: '#1a56db' },
+  { timestamp: '2026-05-09 09:15', title: '共享申请', content: '「教育数据」发起共享申请，等待审批', color: '#52c41a' },
+  { timestamp: '2026-05-09 08:45', title: '资产登记', content: '「医疗数据」已提交登记申请', color: '#fa8c16' },
+  { timestamp: '2026-05-08 17:30', title: '数据更新', content: '「经济数据-Q1」已完成更新', color: '#6b7280' },
+  { timestamp: '2026-05-08 16:00', title: '安全扫描', content: '完成全系统安全漏洞扫描，未发现风险', color: '#1a56db' }
 ])
 
 const initLineChart = () => {
@@ -114,25 +130,34 @@ const initLineChart = () => {
     grid: { left: '3%', right: '4%', bottom: '15%', containLabel: true },
     xAxis: {
       type: 'category',
-      data: ['1月', '2月', '3月', '4月', '5月', '6月']
+      data: ['1月', '2月', '3月', '4月', '5月', '6月'],
+      axisLine: { lineStyle: { color: '#e5e7eb' } },
+      axisLabel: { color: '#6b7280' }
     },
-    yAxis: { type: 'value' },
+    yAxis: {
+      type: 'value',
+      axisLine: { show: false },
+      splitLine: { lineStyle: { color: '#f2f4f7' } },
+      axisLabel: { color: '#6b7280' }
+    },
     series: [
       {
         name: '数据总量',
         type: 'line',
         smooth: true,
         data: [820, 932, 901, 1034, 1130, 1256],
-        areaStyle: { color: 'rgba(26, 86, 219, 0.1)' },
-        itemStyle: { color: '#1a56db' }
+        areaStyle: { color: 'rgba(26, 86, 219, 0.08)' },
+        itemStyle: { color: '#1a56db', borderRadius: [4, 4, 0, 0] },
+        lineStyle: { color: '#1a56db' }
       },
       {
         name: '新增资产',
         type: 'line',
         smooth: true,
         data: [120, 132, 101, 134, 190, 230],
-        areaStyle: { color: 'rgba(59, 130, 246, 0.1)' },
-        itemStyle: { color: '#3b82f6' }
+        areaStyle: { color: 'rgba(82, 196, 26, 0.08)' },
+        itemStyle: { color: '#52c41a', borderRadius: [4, 4, 0, 0] },
+        lineStyle: { color: '#52c41a' }
       }
     ]
   }
@@ -144,20 +169,21 @@ const initPieChart = () => {
   pieChart = echarts.init(pieChartRef.value)
   const option = {
     tooltip: { trigger: 'item' },
-    legend: { bottom: 0 },
+    legend: { bottom: 0, itemWidth: 12, itemHeight: 12 },
     series: [
       {
         type: 'pie',
-        radius: ['40%', '70%'],
+        radius: ['45%', '70%'],
+        center: ['50%', '45%'],
         avoidLabelOverlap: false,
-        itemStyle: { borderRadius: 10, borderColor: '#fff', borderWidth: 2 },
-        label: { show: true, formatter: '{b}: {c} ({d}%)' },
+        itemStyle: { borderRadius: 6, borderColor: '#fff', borderWidth: 2 },
+        label: { show: true, formatter: '{b}\n{c}项', fontSize: 12 },
         data: [
           { value: 450, name: '基础数据', itemStyle: { color: '#1a56db' } },
           { value: 280, name: '业务数据', itemStyle: { color: '#3b82f6' } },
-          { value: 200, name: '统计数据', itemStyle: { color: '#60a5fa' } },
-          { value: 180, name: '监测数据', itemStyle: { color: '#93c5fd' } },
-          { value: 146, name: '其他数据', itemStyle: { color: '#dbeafe' } }
+          { value: 200, name: '统计数据', itemStyle: { color: '#52c41a' } },
+          { value: 180, name: '监测数据', itemStyle: { color: '#fa8c16' } },
+          { value: 146, name: '其他数据', itemStyle: { color: '#6b7280' } }
         ]
       }
     ]
@@ -181,15 +207,34 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
+.welcome-banner {
+  background: linear-gradient(135deg, #1a3a8f, #1a56db);
+  border-radius: 8px;
+  padding: 24px 28px;
+  margin-bottom: 16px;
+  color: white;
+}
+
+.welcome-text h2 {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.welcome-text p {
+  font-size: 14px;
+  opacity: 0.9;
+}
+
 .charts-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 20px;
-  margin-bottom: 20px;
+  gap: 16px;
+  margin-bottom: 16px;
 }
 
 .chart-card {
-  min-height: 400px;
+  min-height: 360px;
 }
 
 @media (max-width: 1200px) {

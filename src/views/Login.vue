@@ -2,14 +2,19 @@
   <div class="login-container">
     <!-- 左侧区域 -->
     <div class="login-left">
-      <h1>数据资产管理平台</h1>
-      <p>Data Asset Management Platform</p>
+      <div class="login-logo">
+        <h1>数据资产管理平台</h1>
+      </div>
+      <div class="login-subtitle">Data Asset Management Platform</div>
+      <div class="login-desc">武邑县政务数据资产管理平台</div>
     </div>
     
     <!-- 右侧登录表单 -->
     <div class="login-right">
-      <h2 class="login-title">欢迎登录</h2>
-      <p class="login-subtitle">请输入您的账号信息</p>
+      <div class="login-header">
+        <h2 class="login-title">欢迎登录</h2>
+        <p class="login-subtitle">请输入您的账号信息</p>
+      </div>
       
       <el-form
         ref="loginFormRef"
@@ -104,8 +109,8 @@ const refreshCaptcha = () => {
 }
 
 const loginForm = reactive({
-  email: '',
-  password: '',
+  email: 'admin',
+  password: 'admin123',
   captcha: ''
 })
 
@@ -163,40 +168,51 @@ const handleLogin = async () => {
 }
 
 .login-left {
-  flex: 1;
+  flex: 1.2;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(135deg, #1a56db 0%, #3b82f6 50%, #60a5fa 100%);
+  background: linear-gradient(135deg, #1a3a8f 0%, #1a56db 50%, #3b82f6 100%);
   color: white;
   padding: 40px;
 }
 
-.login-left h1 {
-  font-size: 42px;
+.login-logo h1 {
+  font-size: 38px;
   font-weight: 600;
-  margin-bottom: 16px;
+  margin-bottom: 20px;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center;
 }
 
-.login-left p {
-  font-size: 18px;
+.login-subtitle {
+  font-size: 16px;
   opacity: 0.9;
+  margin-bottom: 12px;
+  letter-spacing: 1px;
+}
+
+.login-desc {
+  font-size: 14px;
+  opacity: 0.7;
 }
 
 .login-right {
-  width: 480px;
+  width: 440px;
   background: white;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 60px;
-  box-shadow: -10px 0 40px rgba(0, 0, 0, 0.1);
+  padding: 60px 50px;
+}
+
+.login-header {
+  margin-bottom: 36px;
 }
 
 .login-title {
-  font-size: 28px;
+  font-size: 26px;
   font-weight: 600;
   color: #1f2937;
   margin-bottom: 8px;
@@ -204,11 +220,25 @@ const handleLogin = async () => {
 
 .login-subtitle {
   color: #6b7280;
-  margin-bottom: 40px;
+  font-size: 14px;
 }
 
 .login-form {
   width: 100%;
+}
+
+.login-form :deep(.el-input__wrapper) {
+  padding: 12px 16px;
+  border-radius: 6px;
+  box-shadow: 0 0 0 1px #e5e7eb;
+}
+
+.login-form :deep(.el-input__wrapper:hover) {
+  box-shadow: 0 0 0 1px #1a56db;
+}
+
+.login-form :deep(.el-input__wrapper.is-focus) {
+  box-shadow: 0 0 0 1px #1a56db;
 }
 
 .login-options {
@@ -225,14 +255,14 @@ const handleLogin = async () => {
 }
 
 .forgot-link:hover {
-  color: #3b82f6;
+  color: #1e4db7;
 }
 
 .captcha-code {
   width: 38%;
   height: 40px;
   margin-left: 12px;
-  background: linear-gradient(135deg, #1a56db, #3b82f6);
+  background: linear-gradient(135deg, #1a3a8f, #1a56db);
   border-radius: 6px;
   display: flex;
   align-items: center;
@@ -247,14 +277,15 @@ const handleLogin = async () => {
 
 .login-btn {
   width: 100%;
-  height: 48px;
-  font-size: 16px;
-  border-radius: 8px;
-  background: linear-gradient(135deg, #1a56db, #3b82f6);
+  height: 44px;
+  font-size: 15px;
+  border-radius: 6px;
+  background: linear-gradient(135deg, #1a3a8f, #1a56db);
   border: none;
+  letter-spacing: 2px;
 }
 
 .login-btn:hover {
-  background: linear-gradient(135deg, #1e40af, #1a56db);
+  background: linear-gradient(135deg, #1a56db, #3b82f6);
 }
 </style>
