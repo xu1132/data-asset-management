@@ -11,70 +11,37 @@
       <el-tabs v-model="activeTab">
         <el-tab-pane label="我的常用" name="favorite">
           <div class="app-grid">
-            <div class="app-card" v-for="app in favoriteApps" :key="app.id">
+            <div class="app-card" v-for="app in mockStore.favoriteApps" :key="app.id">
               <div class="app-icon">
                 <el-icon :size="40"><Monitor /></el-icon>
               </div>
               <div class="app-info">
                 <h3>{{ app.name }}</h3>
-                <p>{{ app.desc }}</p>
+                <p>{{ app.description }}</p>
               </div>
               <div class="app-actions">
                 <el-button type="primary" size="small">进入系统</el-button>
                 <el-button size="small">资源管理</el-button>
               </div>
-              <el-icon class="star-icon"><StarFilled /></el-icon>
+              <el-icon class="star-icon" @click="mockStore.toggleFavorite(app.id)"><StarFilled /></el-icon>
             </div>
           </div>
         </el-tab-pane>
         <el-tab-pane label="基础应用" name="basic">
           <div class="app-grid">
-            <div class="app-card" v-for="app in basicApps" :key="app.id">
+            <div class="app-card" v-for="app in mockStore.normalApps" :key="app.id">
               <div class="app-icon">
                 <el-icon :size="40"><Monitor /></el-icon>
               </div>
               <div class="app-info">
                 <h3>{{ app.name }}</h3>
-                <p>{{ app.desc }}</p>
+                <p>{{ app.description }}</p>
               </div>
               <div class="app-actions">
                 <el-button type="primary" size="small">进入系统</el-button>
                 <el-button size="small">资源管理</el-button>
               </div>
-            </div>
-          </div>
-        </el-tab-pane>
-        <el-tab-pane label="主题应用" name="theme">
-          <div class="app-grid">
-            <div class="app-card" v-for="app in themeApps" :key="app.id">
-              <div class="app-icon">
-                <el-icon :size="40"><Monitor /></el-icon>
-              </div>
-              <div class="app-info">
-                <h3>{{ app.name }}</h3>
-                <p>{{ app.desc }}</p>
-              </div>
-              <div class="app-actions">
-                <el-button type="primary" size="small">进入系统</el-button>
-                <el-button size="small">资源管理</el-button>
-              </div>
-            </div>
-          </div>
-        </el-tab-pane>
-        <el-tab-pane label="其他应用" name="other">
-          <div class="app-grid">
-            <div class="app-card" v-for="app in otherApps" :key="app.id">
-              <div class="app-icon">
-                <el-icon :size="40"><Monitor /></el-icon>
-              </div>
-              <div class="app-info">
-                <h3>{{ app.name }}</h3>
-                <p>{{ app.desc }}</p>
-              </div>
-              <div class="app-actions">
-                <el-button type="primary" size="small">进入系统</el-button>
-                <el-button size="small">资源管理</el-button>
-              </div>
+              <el-icon class="star-icon" @click="mockStore.toggleFavorite(app.id)"><Star /></el-icon>
             </div>
           </div>
         </el-tab-pane>
@@ -86,15 +53,13 @@
       <!-- 文档列表 -->
       <div class="page-card document-section">
         <div class="section-header">
-          <div class="section-title">
-            <el-icon :size="20"><Document /></el-icon>
-            <span>最新文档</span>
-            <el-button type="primary" link>查看全部 &gt;</el-button>
-          </div>
+          <el-icon :size="20"><Document /></el-icon>
+          <span class="section-title-text">最新文档</span>
+          <el-button type="primary" link>查看全部 &gt;</el-button>
         </div>
         <div class="document-list">
-          <div class="document-item" v-for="doc in documents" :key="doc.id">
-            <el-tag size="small" type="info">文档类型</el-tag>
+          <div class="document-item" v-for="doc in mockStore.documents" :key="doc.id">
+            <el-tag size="small" type="info">{{ doc.type }}</el-tag>
             <span class="doc-title">{{ doc.title }}</span>
             <span class="doc-author">发布人：{{ doc.author }}</span>
           </div>
@@ -108,7 +73,7 @@
           <span class="section-title-text">最新资讯</span>
         </div>
         <div class="news-list">
-          <div class="news-item" v-for="news in newsList" :key="news.id">
+          <div class="news-item" v-for="news in mockStore.newsList" :key="news.id">
             <el-tag v-if="news.hot" size="small" type="danger">最新</el-tag>
             <span class="news-title">{{ news.title }}</span>
             <span class="news-date">{{ news.date }}</span>
@@ -132,48 +97,11 @@
 
 <script setup>
 import { ref } from 'vue'
-import { Bell, Monitor, StarFilled, Document, InfoFilled, Message } from '@element-plus/icons-vue'
+import { Bell, Monitor, Star, StarFilled, Document, InfoFilled, Message } from '@element-plus/icons-vue'
+import { useMockStore } from '@/stores/mock'
 
+const mockStore = useMockStore()
 const activeTab = ref('favorite')
-
-const favoriteApps = ref([
-  { id: 1, name: 'data-platform', desc: '数据编目系统' },
-  { id: 2, name: 'data-report', desc: '数据上报系统' },
-  { id: 3, name: 'data-asset', desc: '数据查询系统' }
-])
-
-const basicApps = ref([
-  { id: 4, name: 'data-base', desc: '基础数据库' },
-  { id: 5, name: 'data-exchange', desc: '数据交换平台' }
-])
-
-const themeApps = ref([
-  { id: 6, name: 'finance-db', desc: '金融主题库' },
-  { id: 7, name: 'health-db', desc: '医疗主题库' }
-])
-
-const otherApps = ref([
-  { id: 8, name: 'other-system', desc: '其他系统' }
-])
-
-const documents = ref([
-  { id: 1, title: '武邑县数据和政务服务局 2025 年部门预算信息公开', author: 'admin' },
-  { id: 2, title: '2025.08.13 号新增个体和企业信息公示.xls', author: 'admin' },
-  { id: 3, title: '武邑县消防救援大队 2025 年 8 月份双随机抽查单位名单', author: 'admin' },
-  { id: 4, title: '武邑县民政局 2025 年 8 月全县分散供养城市特困人员资金发放台账', author: 'admin' },
-  { id: 5, title: '武邑县民政局 2025 年 8 月全县分散供养农村特困人员资金发放台账', author: 'admin' },
-  { id: 6, title: '武邑县民政局 2025 年 8 月全县农村低保金发放台账', author: 'admin' }
-])
-
-const newsList = ref([
-  { id: 1, title: '数据资产管理平台试运行上线公告', date: '2025-12-01', hot: true },
-  { id: 2, title: '数据安全管理规范更新通知', date: '2025-11-28' },
-  { id: 3, title: '2023 年度数据质量报告发布', date: '2025-11-25' },
-  { id: 4, title: '数据分析师培训课程安排', date: '2025-11-20' },
-  { id: 5, title: '数据可视化工具使用指南', date: '2025-11-15' },
-  { id: 6, title: '数据资产目录更新说明', date: '2025-11-10' },
-  { id: 7, title: '数据治理项目阶段性成果展示', date: '2025-11-05' }
-])
 </script>
 
 <style scoped>
@@ -273,15 +201,6 @@ const newsList = ref([
   margin-bottom: 16px;
   padding-bottom: 12px;
   border-bottom: 1px solid #e5e7eb;
-}
-
-.section-title {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 16px;
-  font-weight: 600;
-  color: #1f2937;
 }
 
 .section-title-text {
